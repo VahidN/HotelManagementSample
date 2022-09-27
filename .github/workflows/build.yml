@@ -13,6 +13,8 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 6.0.400
+    - name: Install LibraryManager
+      run: dotnet tool install -g Microsoft.Web.LibraryManager.Cli
     - name: Build BlazorServer.App
       run: dotnet build ./src/BlazorServer/BlazorServer.App/BlazorServer.App.csproj
     - name: Build BlazorWasm.WebApi
