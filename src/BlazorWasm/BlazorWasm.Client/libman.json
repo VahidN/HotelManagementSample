@@ -1,0 +1,26 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "provider": "unpkg",
+      "library": "bootstrap@4.6.0",
+      "destination": "wwwroot/lib/bootstrap"
+    },
+    {
+      "provider": "unpkg",
+      "library": "open-iconic@1.1.1",
+      "destination": "wwwroot/lib/open-iconic"
+    },
+    {
+      "provider": "unpkg",
+      "library": "jquery@3.6.0",
+      "destination": "wwwroot/lib/jquery"
+    },
+    {
+      "provider": "unpkg",
+      "library": "toastr@2.1.4",
+      "destination": "wwwroot/lib/toastr"
+    }
+  ]
+}

@@ -1,0 +1,127 @@
+﻿@page "/hotel-room/create"
+@page "/hotel-room/edit/{Id:int}"
+
+@inherits OwningComponentBase<IHotelRoomService>
+
+@if (HotelRoomModel is null)
+{
+    <div class="row mt-2 mb-5">
+        <div class="col-md-12">
+            <div class="alert alert-info">
+                Loading ...
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="row mt-2 mb-5">
+        <h3 class="card-title text-info mb-3 ml-3">@Title Hotel Room</h3>
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <EditForm Model="HotelRoomModel" OnValidSubmit="HandleHotelRoomUpsert">
+                        <DataAnnotationsValidator/>
+                        @*<ValidationSummary />*@
+                        <div class="form-group">
+                            <label>Name</label>
+                            <InputText @bind-Value="HotelRoomModel.Name" class="form-control"></InputText>
+                            <ValidationMessage For="() => HotelRoomModel.Name"></ValidationMessage>
+                        </div>
+                        <div class="form-group">
+                            <label>Occupancy</label>
+                            <InputNumber @bind-Value="HotelRoomModel.Occupancy" class="form-control"></InputNumber>
+                            <ValidationMessage For="() => HotelRoomModel.Occupancy"></ValidationMessage>
+                        </div>
+                        <div class="form-group">
+                            <label>Rate</label>
+                            <InputNumber @bind-Value="HotelRoomModel.RegularRate" class="form-control"></InputNumber>
+                            <ValidationMessage For="() => HotelRoomModel.RegularRate"></ValidationMessage>
+                        </div>
+                        <div class="form-group">
+                            <label>Sq ft.</label>
+                            <InputText @bind-Value="HotelRoomModel.SqFt" class="form-control"></InputText>
+                        </div>
+                        <div class="form-group pb-4" style="height:250px;">
+                            <label>Details</label>
+                            @*<InputTextArea @bind-Value="HotelRoomModel.Details" class="form-control"></InputTextArea>*@
+                            <BlazoredTextEditor @ref="@QuillHtml" Placeholder="Please enter the room's detail">
+                                <ToolbarContent>
+                                    <select class="ql-header">
+                                        <option selected=""></option>
+                                        <option value="1"></option>
+                                        <option value="2"></option>
+                                        <option value="3"></option>
+                                        <option value="4"></option>
+                                        <option value="5"></option>
+                                    </select>
+                                    <span class="ql-formats">
+                                        <button class="ql-bold"></button>
+                                        <button class="ql-italic"></button>
+                                        <button class="ql-underline"></button>
+                                        <button class="ql-strike"></button>
+                                    </span>
+                                    <span class="ql-formats">
+                                        <select class="ql-color"></select>
+                                        <select class="ql-background"></select>
+                                    </span>
+                                    <span class="ql-formats">
+                                        <button class="ql-list" value="ordered"></button>
+                                        <button class="ql-list" value="bullet"></button>
+                                    </span>
+                                    <span class="ql-formats">
+                                        <button class="ql-link"></button>
+                                    </span>
+                                </ToolbarContent>
+                                <EditorContent>
+                                </EditorContent>
+                            </BlazoredTextEditor>
+                        </div>
+                        <div class="form-group pt-5 mt-5">
+                            <InputFile OnChange="HandleImageUpload" multiple></InputFile>
+                            <div class="row">
+                                @if (IsImageUploadProcessStarted)
+                                {
+                                    <div class="col-md-12">
+                                        <span><i class="spinner"></i> Please wait.. Images are uploading...</span>
+                                    </div>
+                                }
+
+                                @if (HotelRoomModel is not null && HotelRoomModel.HotelRoomImages.Count > 0)
+                                {
+                                    var serial = 1;
+                                    foreach (var roomImage in HotelRoomModel.HotelRoomImages)
+                                    {
+                                        <div class="col-md-2 mt-3">
+                                            <div class="room-image" style="background: url('@roomImage.RoomImageUrl') 50% 50%; ">
+                                                <span class="room-image-title">@serial</span>
+                                            </div>
+                                            <button type="button"
+                                                    @onclick="() => DeletePhoto(roomImage)"
+                                                    class="btn btn-outline-danger btn-block mt-4">
+                                                Delete
+                                            </button>
+                                        </div>
+                                        serial++;
+                                    }
+                                }
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-primary">@Title Room</button>
+                            <NavLink href="hotel-room" class="btn btn-secondary">Back to Index</NavLink>
+                        </div>
+                    </EditForm>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <Confirmation @ref="Confirmation1"
+                  OnCancel="OnCancelDeleteImageClicked"
+                  OnConfirm="@(() => OnConfirmDeleteImageClicked(ImageToBeDeleted))">
+        <div>
+            Do you want to delete @ImageToBeDeleted?.RoomImageUrl image?
+        </div>
+    </Confirmation>
+}

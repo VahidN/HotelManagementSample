@@ -1,0 +1,58 @@
+﻿@page "/hotel-amenity/create"
+@page "/hotel-amenity/edit/{Id:int}"
+
+@inherits OwningComponentBase<IAmenityService>
+
+@if (HotelAmenityModel is null)
+{
+    <div class="row mt-2 mb-5">
+        <div class="col-md-12">
+            <div class="alert alert-info">
+                Loading ...
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="row mt-2 mb-5">
+        <h3 class="card-title text-info mb-3 ml-3">@Title Hotel Amenity</h3>
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    @* First Keep On Submit then change to onValidSubmit *@
+                    <EditForm Model="@HotelAmenityModel" OnValidSubmit="HandleHotelAmenityCreate">
+                        <DataAnnotationsValidator/>
+                        @*Show validation summary <ValidationSummary/>*@
+                        <div class="form-group">
+                            <label>Name</label>
+                            <InputText @bind-Value="HotelAmenityModel.Name" class="form-control"></InputText>
+                            <ValidationMessage For="() => HotelAmenityModel.Name"></ValidationMessage>
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <InputTextArea @bind-Value="HotelAmenityModel.Description" class="form-control"></InputTextArea>
+                            <ValidationMessage For="() => HotelAmenityModel.Description"></ValidationMessage>
+                        </div>
+                        <div class="form-group">
+                            <label>Timming</label>
+                            <InputText @bind-Value="HotelAmenityModel.Timming" class="form-control"></InputText>
+                            <ValidationMessage For="() => HotelAmenityModel.Timming"></ValidationMessage>
+                        </div>
+                        <div class="form-group">
+                            <label>Icon Style</label>
+                            <InputText @bind-Value="HotelAmenityModel.IconStyle" class="form-control"></InputText>
+                            <ValidationMessage For="() => HotelAmenityModel.IconStyle"></ValidationMessage>
+                        </div>
+
+
+                        <div class="form-group">
+                            <button class="btn btn-primary"> @Title Amenity </button>
+                            <NavLink href="@("hotel-amenity")" class="btn btn-secondary">Back to Index </NavLink>
+                        </div>
+                    </EditForm>
+                </div>
+            </div>
+        </div>
+    </div>
+}

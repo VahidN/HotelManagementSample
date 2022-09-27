@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <NoWarn>RCS1090</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
+    <PackageReference Include="Parbad.AspNetCore" />
+    <PackageReference Include="Parbad.Storage.EntityFrameworkCore" />
+    <PackageReference Include="Swashbuckle.AspNetCore" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\BlazorServer\BlazorServer.DataAccess\BlazorServer.DataAccess.csproj" />
+    <ProjectReference Include="..\..\BlazorServer\BlazorServer.Services\BlazorServer.Services.csproj" />
+    <ProjectReference Include="..\..\BlazorServer\BlazorServer.Models.Mappings\BlazorServer.Models.Mappings.csproj" />
+    <ProjectReference Include="..\..\BlazorServer\BlazorServer.Common\BlazorServer.Common.csproj" />
+    <ProjectReference Include="..\BlazorWasm.Client\BlazorWasm.Client.csproj" />
+  </ItemGroup>
+</Project>

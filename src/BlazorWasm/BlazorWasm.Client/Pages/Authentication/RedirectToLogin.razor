@@ -1,0 +1,16 @@
+﻿@using System.Security.Claims
+@if (AuthState is not null)
+{
+    <div class="alert alert-danger mt-3">
+        <p>You [@AuthState.User.Identity?.Name] do not have access to the requested page</p>
+        <div>
+            Your roles:
+            <ul>
+                @foreach (var claim in AuthState.User.Claims.Where(c => c.Type == ClaimTypes.Role))
+                {
+                    <li>@claim.Value</li>
+                }
+            </ul>
+        </div>
+    </div>
+}

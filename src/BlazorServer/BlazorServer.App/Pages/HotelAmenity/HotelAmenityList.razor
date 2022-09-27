@@ -1,0 +1,57 @@
+﻿@page "/hotel-amenity"
+
+@inherits OwningComponentBase<IAmenityService>
+
+<div class="row mt-4">
+    <div class="col-6">
+        <h4 class="card-title text-info">Hotel Amenity</h4>
+    </div>
+    <div class="col-5 offset-1">
+        <NavLink href="@("hotel-amenity/create")" class="btn btn-info form-control">Add New Amenity </NavLink>
+    </div>
+</div>
+<div class="row mt-4">
+    <div class="col-md-12">
+        <table class="table table-bordered table-hover" id="tblHotelAmenity">
+            <thead>
+            <tr>
+
+                <th>Name</th>
+                <th>Timming</th>
+                <th>Icon</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            @if (HotelAmenities.Any())
+            {
+                foreach (var amenity in HotelAmenities)
+                {
+                    <tr>
+                        <td>@amenity.Name</td>
+                        <td>@amenity.Timming</td>
+                        <td>
+                            <i class="@amenity.IconStyle"></i>
+                        </td>
+                        <td>
+                            <NavLink href="@($"hotel-amenity/edit/{amenity.Id}")" class="btn btn-primary">Edit</NavLink>
+                            <button class="btn btn-danger" @onclick="() => HandleDelete(amenity.Id)">Delete</button>
+                        </td>
+
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="9">No records found</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>
+<DeleteConfirmation
+    IsParentComponentProcessing="IsProcessing"
+    ConfirmationChanged="ConfirmDelete_Click">
+</DeleteConfirmation>

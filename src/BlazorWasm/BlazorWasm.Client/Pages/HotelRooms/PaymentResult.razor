@@ -1,0 +1,28 @@
+﻿@page "/payment-result/{OrderId:int}/{TrackingNumber:long}/{Message}"
+
+@if (IsLoading)
+{
+    <div style="position:fixed;top:50%;left:50%;margin-top:-50px;margin-left:-100px;">
+        <img src="images/ajax-loader.gif"/>
+    </div>
+}
+else
+{
+    <div class="container">
+        <div class="row mt-4 pt-4">
+            <div class="col-10 offset-1 text-center">
+                @if (IsPaymentSuccessful)
+                {
+                    <h2 class="text-success">Booking Confirmed!</h2>
+                    <p>Your room has been booked successfully with order id @OrderId & tracking number @TrackingNumber .</p>
+                }
+                else
+                {
+                    <h2 class="text-warning">Booking Failed!</h2>
+                    <p>@Message</p>
+                }
+                <a class="btn btn-primary" href="hotel-rooms">Back to rooms</a>
+            </div>
+        </div>
+    </div>
+}
