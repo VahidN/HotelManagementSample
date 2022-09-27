@@ -13,6 +13,7 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 6.0.400
-    - name: Build BlazorSample
+    - name: Build BlazorServer.App
       run: dotnet build ./src/BlazorServer/BlazorServer.App/BlazorServer.App.csproj
+    - name: Build BlazorWasm.WebApi
       run: dotnet build ./src/BlazorWasm/BlazorWasm.WebApi/BlazorWasm.WebApi.csproj
