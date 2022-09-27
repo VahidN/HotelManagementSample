@@ -245,3 +245,5 @@ ModelManifest.xml
 .fake/
 /.idea
 
+/src/BlazorWasm/BlazorWasm.Client/wwwroot/lib
+/src/BlazorServer/BlazorServer.App/wwwroot/lib
