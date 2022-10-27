@@ -1,9 +1,11 @@
+using BlazorServer.App.Areas.Identity;
 using BlazorServer.DataAccess;
 using BlazorServer.DataAccess.Utils;
 using BlazorServer.Entities;
 using BlazorServer.Models;
 using BlazorServer.Models.Mappings;
 using BlazorServer.Services;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -37,6 +39,9 @@ void ConfigureServices(IServiceCollection services, IConfiguration configuration
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders()
             .AddDefaultUI();
+
+    services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
+    services.AddScoped<IUserInfoService, UserInfoService>();
 
     services.AddScoped<IHotelRoomService, HotelRoomService>();
     services.AddScoped<IIdentityDbInitializer, IdentityDbInitializer>();
