@@ -15,8 +15,13 @@ builder.Services.AddHttpClient(
                                "ServerAPI",
                                client =>
                                {
-                                   client.BaseAddress =
-                                       new Uri(builder.Configuration.GetValue<string>("BaseAPIUrl"));
+                                   var uriString = builder.Configuration.GetValue<string>("BaseAPIUrl");
+                                   if (string.IsNullOrWhiteSpace(uriString))
+                                   {
+                                       throw new InvalidOperationException("BaseAPIUrl is null");
+                                   }
+
+                                   client.BaseAddress = new Uri(uriString);
                                    client.DefaultRequestHeaders.Add("User-Agent", "BlazorWasm.Client 1.0");
                                }
                               )

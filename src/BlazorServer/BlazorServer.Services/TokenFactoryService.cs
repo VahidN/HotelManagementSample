@@ -64,6 +64,11 @@ public class TokenFactoryService : ITokenFactoryService
             throw new InvalidOperationException("issuer is null");
         }
 
+        if (string.IsNullOrWhiteSpace(user.Email))
+        {
+            throw new InvalidOperationException("user.Email is null");
+        }
+
         var claims = new List<Claim>
                      {
                          // Issuer

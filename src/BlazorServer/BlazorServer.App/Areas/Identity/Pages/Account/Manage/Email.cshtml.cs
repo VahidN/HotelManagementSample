@@ -42,7 +42,7 @@ public class EmailModel : PageModel
 
         Input = new InputModel
                 {
-                    NewEmail = email,
+                    NewEmail = email ?? throw new InvalidOperationException("email is null"),
                 };
 
         IsEmailConfirmed = await _userManager.IsEmailConfirmedAsync(user);
@@ -131,8 +131,12 @@ public class EmailModel : PageModel
             throw new InvalidOperationException("callback url is null");
         }
 
-        await _emailSender.SendEmailAsync(
-                                          email,
+        if (string.IsNullOrWhiteSpace(email))
+        {
+            throw new InvalidOperationException("email is null");
+        }
+
+        await _emailSender.SendEmailAsync(email,
                                           "Confirm your email",
                                           $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 

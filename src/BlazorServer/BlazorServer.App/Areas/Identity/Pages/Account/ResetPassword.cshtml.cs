@@ -45,6 +45,12 @@ public class ResetPasswordModel : PageModel
             return RedirectToPage("./ResetPasswordConfirmation");
         }
 
+        if (string.IsNullOrWhiteSpace(Input.Code))
+        {
+            ModelState.AddModelError(string.Empty, "Input.Code is null");
+            return Page();
+        }
+
         var result = await _userManager.ResetPasswordAsync(user, Input.Code, Input.Password);
         if (result.Succeeded)
         {

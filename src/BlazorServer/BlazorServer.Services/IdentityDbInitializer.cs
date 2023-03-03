@@ -38,13 +38,15 @@ public class IdentityDbInitializer : IIdentityDbInitializer
         await _roleManager.CreateAsync(new IdentityRole(ConstantRoles.Customer));
         await _roleManager.CreateAsync(new IdentityRole(ConstantRoles.Employee));
 
+        var password = _adminUserSeedOptions.Value.Password ??
+                       throw new InvalidOperationException("_adminUserSeedOptions.Value.Password is null");
         await _userManager.CreateAsync(new ApplicationUser
                                        {
                                            UserName = _adminUserSeedOptions.Value.UserName,
                                            Email = _adminUserSeedOptions.Value.Email,
                                            EmailConfirmed = true,
                                        },
-                                       _adminUserSeedOptions.Value.Password);
+                                       password);
 
         var user = await _dbContext.Users.FirstAsync(u => u.Email == _adminUserSeedOptions.Value.Email);
         await _userManager.AddToRoleAsync(user, ConstantRoles.Admin);

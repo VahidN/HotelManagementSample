@@ -83,7 +83,8 @@ public partial class HotelRoomUpsert
     {
         if (AuthenticationState is null)
         {
-            await JsRuntime.ToastrError("AuthenticationState is null");
+            // In a BlazorServer component, JSRuntime is not available in OnInitialize or OnInitializedAsync.
+            // await JsRuntime.ToastrError("AuthenticationState is null")
             return;
         }
 

@@ -88,7 +88,7 @@ public class EnableAuthenticatorModel : PageModel
         if (await _userManager.CountRecoveryCodesAsync(user) == 0)
         {
             var recoveryCodes = await _userManager.GenerateNewTwoFactorRecoveryCodesAsync(user, 10);
-            RecoveryCodes = recoveryCodes.ToArray();
+            RecoveryCodes = recoveryCodes?.ToArray();
             return RedirectToPage("./ShowRecoveryCodes");
         }
 
@@ -111,8 +111,13 @@ public class EnableAuthenticatorModel : PageModel
         AuthenticatorUri = GenerateQrCodeUri(email, unformattedKey);
     }
 
-    private static string FormatKey(string unformattedKey)
+    private static string? FormatKey(string? unformattedKey)
     {
+        if (string.IsNullOrWhiteSpace(unformattedKey))
+        {
+            return null;
+        }
+
         var result = new StringBuilder();
         var currentPosition = 0;
         while (currentPosition + 4 < unformattedKey.Length)
@@ -129,13 +134,15 @@ public class EnableAuthenticatorModel : PageModel
         return result.ToString().ToLowerInvariant();
     }
 
-    private string GenerateQrCodeUri(string email, string unformattedKey) =>
-        string.Format(
-                      CultureInfo.InvariantCulture,
-                      AuthenticatorUriFormat,
-                      _urlEncoder.Encode("BlazorServer.App"),
-                      _urlEncoder.Encode(email),
-                      unformattedKey);
+    private string? GenerateQrCodeUri(string? email, string? unformattedKey) =>
+        string.IsNullOrWhiteSpace(email)
+            ? null
+            : string.Format(
+                            CultureInfo.InvariantCulture,
+                            AuthenticatorUriFormat,
+                            _urlEncoder.Encode("BlazorServer.App"),
+                            _urlEncoder.Encode(email),
+                            unformattedKey);
 
     public class InputModel
     {

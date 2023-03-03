@@ -87,7 +87,7 @@ public class ExternalLoginModel : PageModel
         {
             Input = new InputModel
                     {
-                        Email = info.Principal.FindFirstValue(ClaimTypes.Email),
+                        Email = info.Principal.FindFirstValue(ClaimTypes.Email)!,
                     };
         }
 

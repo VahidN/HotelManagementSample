@@ -31,7 +31,7 @@ public class ClientHttpInterceptorService : DelegatingHandler
         }
 
         // How to add a JWT to all of the requests
-        var token = await _localStorage.GetItemAsync<string>(ConstantKeys.LocalToken);
+        var token = await _localStorage.GetItemAsync<string>(ConstantKeys.LocalToken, cancellationToken);
         if (token is not null)
         {
             request.Headers.Authorization = new AuthenticationHeaderValue("bearer", token);

@@ -18,7 +18,7 @@ public class GenerateRecoveryCodesModel : PageModel
         _logger = logger;
     }
 
-    [TempData] public IList<string> RecoveryCodes { get; set; } = new List<string>();
+    [TempData] public IList<string>? RecoveryCodes { get; set; } = new List<string>();
 
     [TempData] public string? StatusMessage { get; set; }
 
@@ -58,7 +58,7 @@ public class GenerateRecoveryCodesModel : PageModel
         }
 
         var recoveryCodes = await _userManager.GenerateNewTwoFactorRecoveryCodesAsync(user, 10);
-        RecoveryCodes = recoveryCodes.ToArray();
+        RecoveryCodes = recoveryCodes?.ToArray();
 
         _logger.LogInformation("User with ID '{UserId}' has generated new 2FA recovery codes.", userId);
         StatusMessage = "You have generated new recovery codes.";

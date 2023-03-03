@@ -80,6 +80,11 @@ void ConfigureServices(IServiceCollection services, IConfiguration configuration
                                       builder => { builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader(); }));
 
     var apiSettings = bearerTokensSection.Get<BearerTokensOptions>();
+    if (apiSettings is null)
+    {
+        throw new InvalidOperationException("apiSettings is null");
+    }
+
     var apiSettingsKey = apiSettings.Key;
     if (string.IsNullOrWhiteSpace(apiSettingsKey))
     {

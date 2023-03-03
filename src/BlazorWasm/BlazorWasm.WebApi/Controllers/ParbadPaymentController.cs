@@ -89,6 +89,11 @@ public class ParbadPaymentController : Controller
     private string GetClientReturnUrl(int orderId, long trackingNumber, string errorMessage)
     {
         var clientBaseUrl = _configuration.GetValue<string>("Client_URL");
+        if (string.IsNullOrWhiteSpace(clientBaseUrl))
+        {
+            throw new InvalidOperationException("Client_URL is null");
+        }
+
         return new Uri(new Uri(clientBaseUrl),
                        Invariant($"/payment-result/{orderId}/{trackingNumber}/{Uri.EscapeDataString(errorMessage)}"))
             .ToString();
