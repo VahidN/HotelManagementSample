@@ -13,9 +13,8 @@ else
             <div class="col-12 col-md-5  offset-md-1 pl-2  pr-2 pr-md-0">
                 <div class="form-group">
                     <label>Check In Date</label>
-                    <InputDate min="@DateTime.UtcNow.ToString("yyyy-MM-dd")"
+                    <InputDate min="@DateTime.UtcNow.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)"
                                @bind-Value="HomeModel.StartDate"
-                               type="text"
                                class="form-control"/>
                 </div>
             </div>

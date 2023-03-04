@@ -185,14 +185,7 @@ void ConfigureMiddlewares(IApplicationBuilder app, IHostEnvironment env)
     app.UseAuthentication();
     app.UseAuthorization();
 
-    if (env.IsDevelopment())
-    {
-        app.UseParbadVirtualGatewayWhenDeveloping();
-    }
-    else
-    {
-        app.UseParbadVirtualGateway();
-    }
+    app.UseParbadVirtualGateway();
 }
 
 void ConfigureEndpoints(IApplicationBuilder app)
